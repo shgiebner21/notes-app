@@ -1,0 +1,30 @@
+.listcard {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 36px;
+  padding: 6px;
+  overflow-y: hidden;
+  width: 100%;
+}
+
+.listcard:hover {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+.listcard:hover .listcard-title {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.listcard-title {
+  color: var(--text-color);
+  margin: 0 10px;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

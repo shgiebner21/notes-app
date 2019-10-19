@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const HTTPError = require('node-http-error')
 const low = require('lowdb')
 const FileAsync = require('lowdb/adapters/FileAsync')
 const cors = require('cors')
@@ -19,7 +18,7 @@ low(adapter)
   .then(db => {
 
     // GET /notes/
-    app.get('/notes', (req, res, err) => {
+    app.get('/notes', (req, res) => {
       const notes = db.get('notes')
         .value()
       res.send(notes)
@@ -27,11 +26,11 @@ low(adapter)
 
     // GET /notes/:id
     app.get('/notes/:id', (req, res) => {
-      const notes = db.get('notes')
+      const note = db.get('notes')
         .find({ id: req.params.id })
         .value()
 
-      res.send(notes)
+      res.send(note)
     })
 
 

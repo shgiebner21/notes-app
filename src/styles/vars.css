@@ -1,0 +1,30 @@
+/* Hide the focus outline on the virtualized lists */
+.ReactVirtualized__List {
+  outline: none;
+}
+
+:root {
+  /* --------------------- */
+  /* Color */
+  /* --------------------- */
+  --brandcolor-lime-green: #C8E152;
+  --brandcolor-emerald: #4FAF65;
+  --brandcolor-dark-seafoam: #2D756F;
+  --brandcolor-ocean-blue: #1B2C6B;
+
+
+  /* --color-light: #f1f1f1;
+  --color-medium: #6484c7;
+  --color-base: #4966a7;
+  --color-dark: #2a4379;
+  --color-darker: #7c5423; */
+  --primary-color: var(--brandcolor-emerald);
+  /* --secondary-color: var(--color-light); */
+  /* --preview-background-color: #dceaf5;
+  --accent-color: rgb(80, 119, 93);
+  --accent-color-dark: rgb(34, 45, 35); */
+
+  --black: #444;
+  --white: #fff;
+
+}
