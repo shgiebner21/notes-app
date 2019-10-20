@@ -6,16 +6,21 @@ import { Divider, Form, Button } from 'semantic-ui-react'
 export default class EditField extends Component {
   static propTypes = {
     /** Id of the note */
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     /** Text to display for input */
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     /** Input value passed down to edit */
-    content: PropTypes.string.isRequired,
+    content: PropTypes.string,
     /** Placeholder text for input field */
     placeholder: PropTypes.string.isRequired,
     /** Function called when the button is clicked */
     onAdd: PropTypes.func,
   }  
+  static defaultProps = {
+    id: 0,
+    label: '',
+    content: ''
+  }
 
   constructor(props) {
     super(props)
@@ -43,11 +48,8 @@ export default class EditField extends Component {
   }
 
   render() {
-    const { id, label, content, placeholder } = this.props
+    const { label, placeholder } = this.props
     const { inputValue } = this.state
-
-    console.log('EditField props => ', this.props)
-    console.log('EditField inputValue => ', inputValue)
 
     return (
       <React.Fragment>

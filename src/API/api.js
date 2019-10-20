@@ -67,9 +67,6 @@ low(adapter)
       res.send(note)
     })
 
-    // app.delete('/', function (req, res) {
-    //   res.send('DELETE request to homepage')
-    // })
 
     // Set db default values
     return db.defaults({ notes: [] }).write()

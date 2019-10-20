@@ -32,15 +32,19 @@ export default class LandingPage extends Component {
     if (this.state.notes.length > 0 && this.state.notesExist === false) {
       this.setState({ notesExist: true })
     }
+
+    if (this.state.notes.length === 0 && this.state.notesExist === true) {
+      this.setState({ notesExist: false })
+    }
+
   }
 
   handleAdd = () => {
     this.setState({ showInput: true })
   }
 
-
-  handleClick = () => {
-    console.log('Note clicked')
+  cancelAdd = () => {
+    this.setState({ showInput: false })
   }
 
 
@@ -70,7 +74,6 @@ export default class LandingPage extends Component {
 
 
   handleDelete = (note) => {
-    console.log('Delete Note clicked with id => ', note)
     
     fetch('http://localhost:3001/notes/:id', {
       method: 'DELETE',
@@ -89,11 +92,10 @@ export default class LandingPage extends Component {
   renderWhenEmpty = () => {
     return (
       <ListCard
+        id='empty'
         key="no-notes"
         note="You do not have any notes yet.  Click on the Add button above to enter a note."
-        onClick={() => {
-          this.handleClick()
-        }}
+        onClick={() => {} }
       />
     )
   }
@@ -104,32 +106,32 @@ export default class LandingPage extends Component {
     const { notes, notesExist, showInput } = this.state
 
     const renderItems = notes.map(note => {
-      console.log('renderItems note => ', note)
       return (
         <ListCard
-          id={note.id}
+          id={note.id.toString() }
           key={note.id}
           note={note.content}
-          onClick={() => {
-            this.handleEdit(note)
-          }}
-          onEdit={() => {
-            this.handleEdit(note)
-          }}
-          onDelete={() => {
-            this.handleDelete(note)
-          }}
+          onClick={() => { this.handleEdit(note) }}
+          onEdit={() => { this.handleEdit(note) }}
+          onDelete={() => { this.handleDelete(note) }}
         />
       )
     })
+
+    const buttonText = () => {
+      return (
+        showInput ? <Button color='red' onClick={this.cancelAdd} > Cancel</Button>
+                  : <Button primary onClick={this.handleAdd} > Add Note</Button>
+        )
+    } 
+
     
 
     return (
       <Segment className='MainForm' >
         <div className="notes-container" >
             <h3>Welcome to the Notes App</h3>
-            <Button primary onClick={this.handleAdd} > Add Note
-            </Button>
+            {buttonText()}
 
             {showInput &&
               <InputField label='Note: ' placeholder='Type note here...'
