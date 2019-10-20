@@ -10,23 +10,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 #### `In the first window, navigate to src/API folder and type node api.js [Enter]`
 #### `When the api is running, you will see 'listening on port 3001'`
 
-#### `In the second window, from the rool folder type yarn start [Enter]`
-
-
-
-
-
-
+#### `In the second window, from the root folder type yarn start [Enter]`
 
 
 ## `TODO's:`
 
 ### *Add input validation*
 ### *Add error handling to API*
-### *Add Jest / Enzyme*
 ### * Add BoomTown! logo??? *
 ### * Cancel note functionality if I have time *
-### * Cancel Edit note functionality if I have time *
 
 
 ### `yarn test`
