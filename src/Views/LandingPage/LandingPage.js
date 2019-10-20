@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Segment, Divider } from 'semantic-ui-react'
+import { Segment, Divider, Button, Input } from 'semantic-ui-react'
 
 import ListCard from '../../components/Molecules/ListCard/ListCard'
+import InputField from '../../components/Molecules/InputField/InputField'
 
 import './LandingPage.css'
 
@@ -15,6 +16,7 @@ export default class LandingPage extends Component {
     this.state = ({
       notes: [],
       notesExist: false,
+      showInput: false
     })
   }
 
@@ -32,10 +34,15 @@ export default class LandingPage extends Component {
     }
   }
 
+  handleAdd = () => {
+    this.setState({ showInput: true })
+  }
+
 
   handleClick = () => {
     console.log('Note clicked')
   }
+
 
   handleEdit = (note) => {
     console.log('Edit Note clicked')
@@ -48,6 +55,25 @@ export default class LandingPage extends Component {
     .then(res => res.text())
     .then(res => console.log('create note res => ', res))
   }
+
+
+  onAddNote = note => {
+
+    fetch('http://localhost:3001/notes', {
+      method: 'POST',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({id: this.state.notes.length + 1, content: note})
+    })
+    .then(res => res.text())
+    .then(() => { this.setState({ showInput: false }) })
+    .then(() => {
+      getNotes()
+      .then(res => res.json() ) 
+      .then(notes => this.setState({ notes }) )
+      .catch(error => console.log('returned error => ', error))
+    })
+  }
+
 
   handleDelete = (id) => {
     console.log('Delete Note clicked with id => ', id)
@@ -81,12 +107,14 @@ export default class LandingPage extends Component {
               )
   }
 
+  
+
   render() {
-    console.log('state => ', this.state)
+    const { notes, notesExist, showInput } = this.state
 
 
 
-    const renderItems = this.state.notes.map(note => {
+    const renderItems = notes.map(note => {
       return (
         <ListCard
           key={note.id}
@@ -95,7 +123,7 @@ export default class LandingPage extends Component {
             this.handleClick(note.id)
           }}
           onEdit={() => {
-            this.handleEdit({id: 4, content: "My first FE note"})
+            this.handleEdit(note)
           }}
           onDelete={() => {
             this.handleDelete(note.id)
@@ -109,13 +137,22 @@ export default class LandingPage extends Component {
       <Segment className='MainForm' >
         <div className="notes-container" >
             <h3>Welcome to the Notes App</h3>
+            <Button primary
+                    onClick={this.handleAdd} > Add Note
+            </Button>
+
+
+            {showInput &&
+              <InputField label='Note: ' placeholder='Type note here...'
+                          onAdd={this.onAddNote} />
+              }
             <Divider />
 
             <div>
-            {!this.state.notesExist &&
+            {!notesExist &&
                <ul className="schedulelist-wrapper">{this.renderWhenEmpty()}</ul>
               }
-              {this.state.notes &&
+              {notes &&
                <ul className="schedulelist-wrapper">{renderItems}</ul>
               }
              
