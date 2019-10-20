@@ -1,20 +1,3 @@
 {
-  "notes": [
-    {
-      "id": 1,
-      "content": "My first note"
-    },
-    {
-      "id": 2,
-      "content": "My second note"
-    },
-    {
-      "id": 3,
-      "content": "My third note"
-    },
-    {
-      "id": 4,
-      "content": "My first FE note"
-    }
-  ]
+  "notes": []
 }

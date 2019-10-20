@@ -36,9 +36,9 @@ low(adapter)
 
     // PUT Create Note /notes/:id
     app.post('/notes', (req, res) => {
-      console.log('\x1b[32m', 'note to create => ', req.body.note, '\x1b[0m')
+      console.log('\x1b[32m', 'note to create => ', req.body, '\x1b[0m')
       const note = db.get('notes')
-        .push({ id: req.body.note.id, content: req.body.note.content })
+        .push({ id: req.body.id, content: req.body.content })
         .write()
 
       res.send(note)
