@@ -83,14 +83,8 @@ export default class LandingPage extends Component {
       .then(notes => this.setState({ notes }) )
       .catch(error => console.log('returned error => ', error))
     })
-
   }
 
-  // fetch("/api/users/delete/" + userId, requestOptions).then((response) => {
-  //   return response.json();
-  // }).then((result) => {
-  //   // do what you want with the response here
-  // })
 
   renderWhenEmpty = () => {
     return (
@@ -108,8 +102,6 @@ export default class LandingPage extends Component {
 
   render() {
     const { notes, notesExist, showInput } = this.state
-    console.log('LandingPage notes => ', notes)
-
 
     const renderItems = notes.map(note => {
       console.log('renderItems note => ', note)
@@ -136,8 +128,7 @@ export default class LandingPage extends Component {
       <Segment className='MainForm' >
         <div className="notes-container" >
             <h3>Welcome to the Notes App</h3>
-            <Button primary
-                    onClick={this.handleAdd} > Add Note
+            <Button primary onClick={this.handleAdd} > Add Note
             </Button>
 
             {showInput &&

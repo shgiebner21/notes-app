@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Divider } from 'semantic-ui-react'
+import { Segment, Divider, Button } from 'semantic-ui-react'
 
 import ListCard from '../../components/Molecules/ListCard/ListCard'
 import EditField from '../../components/Molecules/EditField/EditField'
@@ -27,9 +27,6 @@ export default class EditPage extends Component {
 
   onUpdateNote = (id, note) => {
 
-    console.log('updatedNote id => ', id)
-    console.log('updatedNote => ', note)
-
     fetch('http://localhost:3001/notes/:id', {
       method: 'PUT',
       headers: {'content-type': 'application/json'},
@@ -42,16 +39,19 @@ export default class EditPage extends Component {
     })
   }
 
+  onCancelEdit = () => {
+    this.props.history.push(`/notes`)
+  }
 
   render() {
     const { noteId, note } = this.state
-
-    console.log('EditNote state  => ', this.state)
 
     return (
       <Segment className='MainForm' >
       <div className="notes-container" >
           <h3>Edit Note</h3>
+          <Button primary onClick={this.onCancelEdit} > Cancel Edit
+            </Button>
 
             <EditField id={note ? note[noteId - 1].id : undefined}
                        label='Note: ' 
