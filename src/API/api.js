@@ -19,6 +19,7 @@ low(adapter)
 
     // GET /notes/
     app.get('/notes', (req, res) => {
+      console.log('\x1b[31m', 'all notes sent to FE', '\x1b[0m')
       const notes = db.get('notes')
         .value()
       res.send(notes)
@@ -33,6 +34,29 @@ low(adapter)
       res.send(note)
     })
 
+    // PUT Create Note /notes/:id
+    app.post('/notes', (req, res) => {
+      console.log('\x1b[32m', 'note to create => ', req.body.note, '\x1b[0m')
+      const note = db.get('notes')
+        .push({ id: req.body.note.id, content: req.body.note.content })
+        .write()
+
+      res.send(note)
+    })
+
+    // DELETE Delete Note /notes/:id
+    app.delete('/notes/:id', (req, res) => {
+      console.log('\x1b[32m', 'id to delete => ', req.params.id, '\x1b[0m')
+      const note = db.get('notes')
+        .remove({ id: req.params.id })
+        .write()
+
+      res.send(note)
+    })
+
+    // app.delete('/', function (req, res) {
+    //   res.send('DELETE request to homepage')
+    // })
 
     // Set db default values
     return db.defaults({ notes: [] }).write()

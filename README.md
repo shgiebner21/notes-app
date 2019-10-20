@@ -26,6 +26,7 @@ You will also see any lint errors in the console.
 ### *Add input validation*
 ### *Add error handling to API*
 ### *Add Jest / Enzyme*
+### * Add BoomTown! logo??? *
 
 
 

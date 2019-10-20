@@ -13,17 +13,16 @@ export default class ListCard extends Component {
     /** function called after the card is clicked */
     onClick: PropTypes.func,
     /** function called after the edit button is clicked */
-    onEdit: PropTypes.func.isRequired,
+    onEdit: PropTypes.func,
     /** Function to call when delete button is clicked */
-    onDelete: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
   }
   static defaultProps = {
-    onClick: () => {}
+    onClick: () => {},
   }
 
   render() {
     const { note, onClick, onEdit, onDelete, style } = this.props
-
 
     return (
       <li
@@ -42,15 +41,21 @@ export default class ListCard extends Component {
           </span>
         </div>
 
-        <EditButton
-          onClick={onEdit}
-          style={{ marginRight: 10 }}
-          data-testid={`listcard-button-edit`}
-        />
-        <DeleteButton
+        {this.props.onEdit && 
+            <EditButton
+            onClick={onEdit}
+            style={{ marginRight: 10 }}
+            data-testid={`listcard-button-edit`}
+          />
+        }
+
+        {this.props.onDelete && 
+            <DeleteButton
             onClick={onDelete}
             data-testid={`listcard-${note.id}-delete-button`}
         />
+        }
+
       </li>
     )
   }

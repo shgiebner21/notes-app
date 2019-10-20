@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Popup } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 export default class DeleteButton extends Component {
   static propTypes = {
