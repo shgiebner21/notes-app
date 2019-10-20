@@ -43,11 +43,8 @@ export default class EditField extends Component {
   }
 
   render() {
-    const { id, label, content, placeholder } = this.props
+    const { label, placeholder } = this.props
     const { inputValue } = this.state
-
-    console.log('EditField props => ', this.props)
-    console.log('EditField inputValue => ', inputValue)
 
     return (
       <React.Fragment>
