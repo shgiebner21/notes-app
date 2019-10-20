@@ -9,9 +9,9 @@ import './ListCard.css'
 export default class ListCard extends Component {
   static propTypes = {
     /** Id of the note to display on card */
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     /** Note to display on card */
-    note: PropTypes.string.isRequired,
+    note: PropTypes.string,
     /** function called after the card is clicked */
     onClick: PropTypes.func,
     /** function called after the edit button is clicked */
@@ -20,6 +20,8 @@ export default class ListCard extends Component {
     onDelete: PropTypes.func,
   }
   static defaultProps = {
+    id: '',
+    note: '',
     onClick: () => {},
   }
 

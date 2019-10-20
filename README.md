@@ -12,6 +12,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 #### `This will open the application in your browser`
 
 
+### `Known issues;`
+#### `Edit note does not work correctly with lowdb, it refuses to update the note, rather it will add a new note with the SAME id as the original note.`
+
 
 ## `To test code before submitting PR's;`
 
@@ -21,12 +24,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## `TODO's:`
 
 ### *Add input validation*
-
-
-
-
-
-
 
 
 
