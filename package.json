@@ -12,13 +12,16 @@
     "ramda": "^0.26.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "yarn test --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -35,5 +38,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "jest": "^24.9.0",
+    "jest-localstorage-mock": "^2.4.0"
   }
 }
