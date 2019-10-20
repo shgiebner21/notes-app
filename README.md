@@ -28,6 +28,7 @@ You will also see any lint errors in the console.
 ### *Add Jest / Enzyme*
 ### * Add BoomTown! logo??? *
 ### * Cancel note functionality if I have time *
+### * Cancel Edit note functionality if I have time *
 
 
 ### `yarn test`

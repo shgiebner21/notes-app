@@ -8,6 +8,8 @@ import './ListCard.css'
 
 export default class ListCard extends Component {
   static propTypes = {
+    /** Id of the note to display on card */
+    id: PropTypes.string.isRequired,
     /** Note to display on card */
     note: PropTypes.string.isRequired,
     /** function called after the card is clicked */
@@ -22,10 +24,11 @@ export default class ListCard extends Component {
   }
 
   render() {
-    const { note, onClick, onEdit, onDelete, style } = this.props
+    const { id, note, onClick, onEdit, onDelete, style } = this.props
 
     return (
       <li
+        id={id}
         style={style}
         className={`listcard`}
         data-testid={`listcard-${note}`}>
@@ -52,7 +55,7 @@ export default class ListCard extends Component {
         {this.props.onDelete && 
             <DeleteButton
             onClick={onDelete}
-            data-testid={`listcard-${note.id}-delete-button`}
+            data-testid={`listcard-delete-button`}
         />
         }
 

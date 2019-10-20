@@ -27,11 +27,14 @@ low(adapter)
 
     // GET /notes/:id
     app.get('/notes/:id', (req, res) => {
-      const note = db.get('notes')
+      console.log('\x1b[31m', 'sent note to FE => ', req.params.id, '\x1b[0m')
+      const notes = db.get('notes')
         .find({ id: req.params.id })
         .value()
 
-      res.send(note)
+      console.log('\x1b[31m', 'getNote api returns => ', notes, '\x1b[0m')
+
+      res.send(notes)
     })
 
     // PUT Create Note /notes/:id
@@ -44,11 +47,21 @@ low(adapter)
       res.send(note)
     })
 
+    // PUT Update Note /notes/:id
+    app.put('/notes/:id', (req, res) => {
+      console.log('\x1b[32m', 'note to update => ', req.body, '\x1b[0m')
+      const note = db.get('notes')
+        .push({ id: req.body.id, content: req.body.content })
+        .write()
+
+      res.send(note)
+    })
+
     // DELETE Delete Note /notes/:id
     app.delete('/notes/:id', (req, res) => {
-      console.log('\x1b[32m', 'id to delete => ', req.params.id, '\x1b[0m')
+      console.log('\x1b[32m', 'id to delete => ', req.body.note.id, '\x1b[0m')
       const note = db.get('notes')
-        .remove({ id: req.params.id })
+        .remove({ id: req.body.note.id })
         .write()
 
       res.send(note)
