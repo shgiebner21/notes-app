@@ -3,21 +3,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 
-## `To start the local server;`
+## `To run the application;`
 
-### `Navigate to src/API folder and type node api.js [Enter]`
+### `Open two terminal windows`
+
+#### `In the first window, navigate to src/API folder and type node api.js [Enter]`
+#### `When the api is running, you will see 'listening on port 3001'`
+
+#### `In the second window, from the rool folder type yarn start [Enter]`
 
 
 
-In the project directory, you can run:
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
 
 
