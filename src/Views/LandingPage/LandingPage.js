@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Segment, Divider, Button, Input } from 'semantic-ui-react'
+import { Segment, Divider, Button } from 'semantic-ui-react'
 
 import ListCard from '../../components/Molecules/ListCard/ListCard'
 import InputField from '../../components/Molecules/InputField/InputField'
@@ -16,7 +16,7 @@ export default class LandingPage extends Component {
     this.state = ({
       notes: [],
       notesExist: false,
-      showInput: false
+      showInput: false,
     })
   }
 
@@ -44,19 +44,6 @@ export default class LandingPage extends Component {
   }
 
 
-  handleEdit = (note) => {
-    console.log('Edit Note clicked')
-
-    fetch('http://localhost:3001/notes', {
-      method: 'POST',
-      headers: {'content-type': 'application/json'},
-      body: JSON.stringify({note})
-    })
-    .then(res => res.text())
-    .then(res => console.log('create note res => ', res))
-  }
-
-
   onAddNote = note => {
 
     fetch('http://localhost:3001/notes', {
@@ -75,16 +62,27 @@ export default class LandingPage extends Component {
   }
 
 
-  handleDelete = (id) => {
-    console.log('Delete Note clicked with id => ', id)
+  handleEdit = (note) => {
+    this.setState({ showInput: true })
+
+    this.props.history.push(`/notes/${note.id}`)
+  }
+
+
+  handleDelete = (note) => {
+    console.log('Delete Note clicked with id => ', note)
     
-    fetch('http://localhost:3001/notes/' + id, {
+    fetch('http://localhost:3001/notes/:id', {
       method: 'DELETE',
       headers: {'content-type': 'application/json'},
-      body: JSON.stringify({id})
+      body: JSON.stringify({note})
     })
-    .then(res => res.text())
-    .then(res => console.log('delete resp => ', res))
+    .then(() => {
+      getNotes()
+      .then(res => res.json() ) 
+      .then(notes => this.setState({ notes }) )
+      .catch(error => console.log('returned error => ', error))
+    })
 
   }
 
@@ -95,38 +93,39 @@ export default class LandingPage extends Component {
   // })
 
   renderWhenEmpty = () => {
-    console.log('renderWhenEmpty')
-            return (
-                <ListCard
-                  key="no-notes"
-                  note="You do not have any notes yet.  Click on the Add button above to enter a note."
-                  onClick={() => {
-                    this.handleClick()
-                  }}
-                />
-              )
+    return (
+      <ListCard
+        key="no-notes"
+        note="You do not have any notes yet.  Click on the Add button above to enter a note."
+        onClick={() => {
+          this.handleClick()
+        }}
+      />
+    )
   }
 
   
 
   render() {
     const { notes, notesExist, showInput } = this.state
-
+    console.log('LandingPage notes => ', notes)
 
 
     const renderItems = notes.map(note => {
+      console.log('renderItems note => ', note)
       return (
         <ListCard
+          id={note.id}
           key={note.id}
           note={note.content}
           onClick={() => {
-            this.handleClick(note.id)
+            this.handleEdit(note)
           }}
           onEdit={() => {
             this.handleEdit(note)
           }}
           onDelete={() => {
-            this.handleDelete(note.id)
+            this.handleDelete(note)
           }}
         />
       )
@@ -141,7 +140,6 @@ export default class LandingPage extends Component {
                     onClick={this.handleAdd} > Add Note
             </Button>
 
-
             {showInput &&
               <InputField label='Note: ' placeholder='Type note here...'
                           onAdd={this.onAddNote} />
@@ -151,11 +149,10 @@ export default class LandingPage extends Component {
             <div>
             {!notesExist &&
                <ul className="schedulelist-wrapper">{this.renderWhenEmpty()}</ul>
-              }
-              {notes &&
-               <ul className="schedulelist-wrapper">{renderItems}</ul>
-              }
-             
+            }
+            {notes &&
+              <ul className="schedulelist-wrapper">{renderItems}</ul>
+            } 
             </div>
 
         </div>
