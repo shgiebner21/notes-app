@@ -13,7 +13,8 @@ export default class LandingPage extends Component {
     super(props)
 
     this.state = ({
-      notes: []
+      notes: [],
+      notesExist: false,
     })
   }
 
@@ -25,26 +26,67 @@ export default class LandingPage extends Component {
       .catch(error => console.log('returned error => ', error))
   }
 
+  componentDidUpdate(prevP, prevS) {
+    if (this.state.notes.length > 0 && this.state.notesExist === false) {
+      this.setState({ notesExist: true })
+    }
+  }
+
+
   handleClick = () => {
     console.log('Note clicked')
   }
 
-  handleEdit = () => {
+  handleEdit = (note) => {
     console.log('Edit Note clicked')
+
+    fetch('http://localhost:3001/notes', {
+      method: 'POST',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({note})
+    })
+    .then(res => res.text())
+    .then(res => console.log('create note res => ', res))
   }
 
-  handleDelete = () => {
-    console.log('Delete Note clicked')
+  handleDelete = (id) => {
+    console.log('Delete Note clicked with id => ', id)
+    
+    fetch('http://localhost:3001/notes/' + id, {
+      method: 'DELETE',
+      headers: {'content-type': 'application/json'},
+      body: JSON.stringify({id})
+    })
+    .then(res => res.text())
+    .then(res => console.log('delete resp => ', res))
+
   }
 
+  // fetch("/api/users/delete/" + userId, requestOptions).then((response) => {
+  //   return response.json();
+  // }).then((result) => {
+  //   // do what you want with the response here
+  // })
 
-
+  renderWhenEmpty = () => {
+    console.log('renderWhenEmpty')
+            return (
+                <ListCard
+                  key="no-notes"
+                  note="You do not have any notes yet.  Click on the Add button above to enter a note."
+                  onClick={() => {
+                    this.handleClick()
+                  }}
+                />
+              )
+  }
 
   render() {
-    console.log('state => ', this.state.notes)
+    console.log('state => ', this.state)
+
+
 
     const renderItems = this.state.notes.map(note => {
-
       return (
         <ListCard
           key={note.id}
@@ -53,7 +95,7 @@ export default class LandingPage extends Component {
             this.handleClick(note.id)
           }}
           onEdit={() => {
-            this.handleEdit(note.id)
+            this.handleEdit({id: 4, content: "My first FE note"})
           }}
           onDelete={() => {
             this.handleDelete(note.id)
@@ -61,6 +103,7 @@ export default class LandingPage extends Component {
         />
       )
     })
+    
 
     return (
       <Segment className='MainForm' >
@@ -69,7 +112,13 @@ export default class LandingPage extends Component {
             <Divider />
 
             <div>
-              <ul className="schedulelist-wrapper">{renderItems}</ul>
+            {!this.state.notesExist &&
+               <ul className="schedulelist-wrapper">{this.renderWhenEmpty()}</ul>
+              }
+              {this.state.notes &&
+               <ul className="schedulelist-wrapper">{renderItems}</ul>
+              }
+             
             </div>
 
         </div>
