@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Segment, Divider, Button } from 'semantic-ui-react'
+import {propEq, filter} from 'ramda'
 
 import ListCard from '../../components/Molecules/ListCard/ListCard'
 import EditField from '../../components/Molecules/EditField/EditField'
@@ -13,15 +14,14 @@ export default class EditPage extends Component {
     super(props)
 
     this.state = ({
-      noteId: 0,
-      note: undefined
+      notes: undefined
     })
   }
 
   componentDidMount() {
     getNote(this.props.match.params.id)
       .then(res => res.json() ) 
-      .then(note => this.setState({ noteId : this.props.match.params.id, note: note }) )
+      .then(note => this.setState({ notes: note }) )
       .catch(error => console.log('returned error => ', error))
   }
 
@@ -44,7 +44,11 @@ export default class EditPage extends Component {
   }
 
   render() {
-    const { noteId, note } = this.state
+    const { notes } = this.state
+
+    // Because Get notes/:id refuses to work on BE, I am bringing in all notes
+    // and then have to filter down to the one I want to edit.
+    const note = notes ? filter(propEq('id', Number(this.props.match.params.id) ), notes) : undefined
 
     return (
       <Segment className='MainForm' >
@@ -53,9 +57,9 @@ export default class EditPage extends Component {
           <Button primary onClick={this.onCancelEdit} > Cancel Edit
             </Button>
 
-            <EditField id={note ? note[noteId - 1].id : undefined}
+            <EditField id={notes ? note[0].id : 0}
                        label='Note: ' 
-                       content={note ? note[noteId - 1].content : undefined}
+                       content={notes ? note[0].content : 'loading'}
                        placeholder='Type note here...'
                        onAdd={this.onUpdateNote} />
 
@@ -64,8 +68,8 @@ export default class EditPage extends Component {
           <div>
              <ul className="schedulelist-wrapper">
                <ListCard
-                 key={note ? note[0].id : undefined}
-                 note={note ? note[0].content : undefined}
+                 key={notes ? note[0].id : 0}
+                 note={notes ? note[0].content : ''}
                  onClick={() => {
                    this.handleClick()
                  }}
