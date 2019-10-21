@@ -20,10 +20,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### `yarn test`
 
+### `Due to the time crunch, there is only one test file added; for DeleteButton.  In a production application, there would be test files for all Atoms, Molecules and Organisms.`
+
 
 ## `TODO's:`
 
 ### *Add input validation*
+
+#### `I was going to add Yup and Formik, but ran out of time.`
 
 
 
